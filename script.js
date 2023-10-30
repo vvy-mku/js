@@ -70,6 +70,12 @@ function addPaymentMethod(name, description, imageSrc) {
   // Добавляєм весь створений та наповнений блок <div class="text"> в <div class="payment-method">
   paymentMethodDiv.appendChild(textDiv);
 
+  handler = function (event) {
+    console.log("Payment method clicked");
+  };
+
+  paymentMethodDiv.addEventListener("click", handler);
+
   // Отримали <div id="container"> в змінну container – контейнер куди будеть добавлятить усі платіжні методи
   container = document.getElementById("container");
 
@@ -86,3 +92,39 @@ addPaymentMethod("Bitcoin", "Crypto", "bitcoin.png");
 addPaymentMethod("PayPal", "Digital money", "paypal.png");
 //
 addPaymentMethod("Visa", "Payment card", "visa.png");
+
+google = document.getElementById("google");
+
+google.addEventListener("click", function (event) {
+  event.preventDefault();
+  console.log("Go to Google event");
+});
+
+a = "sdsd";
+b = 12321;
+c = true;
+d = function () {
+  console.log("my func");
+};
+
+obj = {
+  f1: "field 1",
+  f2: "fiend 2",
+  f3: 1232,
+  f4: false,
+};
+
+arr = ["elemnt 1", "element 2", 23, true];
+
+mastercard = {
+  name: "ms",
+  de: "dwd",
+  img: "ded",
+};
+bct = {
+  name: "ms",
+  de: "dwd",
+  img: "ded",
+};
+
+methods = [mastercard, bct];
