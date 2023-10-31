@@ -1,10 +1,10 @@
-p = document.getElementById("text");
+const p = document.getElementById("text");
 
 p.innerHTML = "my new text";
 
 p.style.color = "red";
 
-p1 = document.createElement("p");
+const p1 = document.createElement("p");
 p1.innerHTML = "my JS element";
 
 document.getElementById("block").appendChild(p1);
@@ -25,17 +25,17 @@ document.getElementById("block").appendChild(p1);
 //            <p class="payment-description-text">Payment card</p>
 //          </div>
 //        </div>;
-function addPaymentMethod(name, description, imageSrc) {
+function addPaymentMethod(name, description, imageSrc, onClick) {
   // Створюємо <div class="payment-method">
-  paymentMethodDiv = document.createElement("div");
+  const paymentMethodDiv = document.createElement("div");
   paymentMethodDiv.classList.add("payment-method");
 
   // Створюємо <div class="card-logo">
-  cardLogoDiv = document.createElement("div");
+  const cardLogoDiv = document.createElement("div");
   cardLogoDiv.classList.add("card-logo");
 
   // Створюємо <img ...
-  logoImg = document.createElement("img");
+  const logoImg = document.createElement("img");
   logoImg.setAttribute("src", imageSrc);
   logoImg.setAttribute("alt", "logo");
 
@@ -46,11 +46,11 @@ function addPaymentMethod(name, description, imageSrc) {
   paymentMethodDiv.appendChild(cardLogoDiv);
 
   // Створюєм <div class="text">
-  textDiv = document.createElement("div");
+  const textDiv = document.createElement("div");
   textDiv.classList.add("text");
 
   // Створюєм <p class="payment-name-text">
-  paymentName = document.createElement("p");
+  const paymentName = document.createElement("p");
   paymentName.classList.add("payment-name-text");
   // Беремо назву платіжного методу з змінної name
   paymentName.innerText = name;
@@ -59,7 +59,7 @@ function addPaymentMethod(name, description, imageSrc) {
   textDiv.appendChild(paymentName);
 
   // Створюєм <p class="payment-description-text">
-  paymentDescription = document.createElement("p");
+  const paymentDescription = document.createElement("p");
   paymentDescription.classList.add("payment-description-text");
   // Беремо опис платіжного методу з змінної description
   paymentDescription.innerText = description;
@@ -70,61 +70,73 @@ function addPaymentMethod(name, description, imageSrc) {
   // Добавляєм весь створений та наповнений блок <div class="text"> в <div class="payment-method">
   paymentMethodDiv.appendChild(textDiv);
 
-  handler = function (event) {
-    console.log("Payment method clicked");
-  };
+  paymentMethodDiv.addEventListener("click", onClick);
 
-  paymentMethodDiv.addEventListener("click", handler);
-
-  // Отримали <div id="container"> в змінну container – контейнер куди будеть добавлятить усі платіжні методи
-  container = document.getElementById("container");
-
-  // Добавляєм наш головий <div class="payment-method"> в контейнер <div id="container">
-  // Оскільки <div id="container"> уже інсує на сторінці то в цей момент новой платіжний метод почне відображатись
-  container.appendChild(paymentMethodDiv);
+  return paymentMethodDiv;
 }
 
-// Викликаєм addPaymentMethod декілька раз з значеннями змінних щоб добавити конкретні платіжні методи
-addPaymentMethod("Mastercard", "Payment card", "mastercard.png");
-//
-addPaymentMethod("Bitcoin", "Crypto", "bitcoin.png");
-//
-addPaymentMethod("PayPal", "Digital money", "paypal.png");
-//
-addPaymentMethod("Visa", "Payment card", "visa.png");
+// Отримали <div id="container"> в змінну container – контейнер куди будеть добавлятить усі платіжні методи
+const container = document.getElementById("container");
 
-google = document.getElementById("google");
+const google = document.getElementById("google");
 
 google.addEventListener("click", function (event) {
   event.preventDefault();
   console.log("Go to Google event");
 });
 
-a = "sdsd";
-b = 12321;
-c = true;
-d = function () {
-  console.log("my func");
-};
+const array = [12, 23, 4123, "232"];
 
-obj = {
-  f1: "field 1",
-  f2: "fiend 2",
-  f3: 1232,
-  f4: false,
-};
+const paymentMethods = [
+  {
+    name: "Mastercard",
+    desc: "Payment card",
+    img: "mastercard.png",
+    onclick: function (event) {
+      console.log("Mastercard clicked");
+    },
+  },
+  {
+    name: "Bitcoin",
+    desc: "Crypto",
+    img: "bitcoin.png",
+    onclick: function (event) {
+      console.log("Bitcoin clicked");
+    },
+  },
+  {
+    name: "PayPal",
+    desc: "Digital money",
+    img: "paypal.png",
+    onclick: function (event) {
+      console.log("PayPal clicked");
+    },
+  },
+  {
+    name: "Visa",
+    desc: "Payment card",
+    img: "visa.png",
+    onclick: function (event) {
+      console.log("Visa clicked");
+    },
+  },
+  {
+    name: "WebMoney",
+    desc: "Digitan money",
+    img: "visa.png",
+    onclick: function (event) {
+      console.log("WebMoney clicked");
+    },
+  },
+];
 
-arr = ["elemnt 1", "element 2", 23, true];
-
-mastercard = {
-  name: "ms",
-  de: "dwd",
-  img: "ded",
-};
-bct = {
-  name: "ms",
-  de: "dwd",
-  img: "ded",
-};
-
-methods = [mastercard, bct];
+for (let i = 0; i < paymentMethods.length; i++) {
+  container.appendChild(
+    addPaymentMethod(
+      paymentMethods[i].name,
+      paymentMethods[i].desc,
+      paymentMethods[i].img,
+      paymentMethods[i].onclick
+    )
+  );
+}
