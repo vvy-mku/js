@@ -39,13 +39,17 @@ input,
 input[type="radio"]+label {
     border: 1px solid #EAECF0;
     border-radius: 4px;
+    color: #101828;
 }
 
 input[type="text"] {
     padding: 8px 16px;
     font-size: 14px;
     line-height: 22px;
-    color: #475467;
+}
+
+input[type="text"]::placeholder {
+    color: #667085;
 }
 
 input[type="button"],

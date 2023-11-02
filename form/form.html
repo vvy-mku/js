@@ -8,12 +8,11 @@
 
 <body>
     <script src="./form.js"></script>
-    <script src="./components/input.js"></script>
     <form>
         <div class="vertical">
-            <input type="text" name="userName" placeholder="Name" />
-            <input type="text" name="userSurname" placeholder="Surname" />
-            <input type="button" id="userReset" value="Reset" />
+            <input id="userNameInput" type="text" name="userName" placeholder="Name" />
+            <input id="userSurnameInput" type="text" name="userSurname" placeholder="Surname" />
+            <input id="userResetButton" type="button" id="userReset" value="Reset" />
         </div>
         <div class="vertical">
             <p id="scoreText">Score for:</p>
@@ -24,9 +23,9 @@
                 <input id="score4" type="radio" name="score" value="4" /><label for="score4">4</label>
                 <input id="score5" type="radio" name="score" value="5" /><label for="score5">5</label>
             </div>
-            <input type="button" id="scoreReset" value="Reset" />
+            <input id="scoreResetButton" type="button" id="scoreReset" value="Reset" />
         </div>
-        <input disabled type="submit" id="submit" value="Submit" />
+        <input type="submit" id="submit" value="Submit" />
     </form>
 </body>
 
