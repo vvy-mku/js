@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="./styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <title>Feedback form</title>
+</head>
+
+<body>
+    <!-- <script src="./form.js"></script>
+    <form>
+        <div class="vertical">
+            <input id="userNameInput" type="text" name="userName" placeholder="Name" />
+            <input id="userSurnameInput" type="text" name="userSurname" placeholder="Surname" />
+            <input id="userResetButton" type="button" id="userReset" value="Reset" />
+        </div>
+        <div class="vertical">
+            <p id="scoreText">Score for:</p>
+            <div class="horizontal">
+                <input id="score1" type="radio" name="score" value="1" /><label for="score1">1</label>
+                <input id="score2" type="radio" name="score" value="2" /><label for="score2">2</label>
+                <input id="score3" type="radio" name="score" value="3" /><label for="score3">3</label>
+                <input id="score4" type="radio" name="score" value="4" /><label for="score4">4</label>
+                <input id="score5" type="radio" name="score" value="5" /><label for="score5">5</label>
+            </div>
+            <input id="scoreResetButton" type="button" id="scoreReset" value="Reset" />
+        </div>
+        <input type="submit" id="submit" value="Submit" />
+    </form> -->
+    <!--- React  -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <div id="root"></div>
+    <script type="text/babel">
+        function FeedbackForm() {
+            const [state, setState] = React.useState({
+                name: "",
+                surname: "",
+                score: null,
+            });
+
+            return (<form>
+                <div className="vertical">
+                    <input type="text" name="userName" placeholder="Name" value={state.name} onChange={(event) => setState({ ...state, name: event.target.value })} />
+                    <input type="text" name="userSurname" placeholder="Surname" value={state.surname} onChange={(event) => setState({ ...state, surname: event.target.value })} />
+                    <input type="button" value="Reset" onClick={(event) => setState({ ...state, name: "", surname: "" })} />
+                </div>
+            </form>);
+
+            // return React.createElement("form", {}, [
+            //     React.createElement("div", { class: "vertical" }, [
+            //         React.createElement("input", { type: "text", name: "userName", placeholder: "Name", value: state.name, onChange: (event) => setState({ ...state, name: event.target.value }) }),
+            //         React.createElement("input", { type: "text", name: "userSurname", placeholder: "Surname", value: state.surname, onChange: (event) => setState({ ...state, surname: event.target.value }) }),
+            //         React.createElement("input", { type: "button", name: "userName", value: "Reset", onClick: (event) => setState({ ...state, name: "", surname: "" }) })
+            //     ]),
+            //     React.createElement("div", { class: "vertical" }, []),
+            //     React.createElement("p", {}, "Score for " + state.name + " " + state.surname + ":"),
+            //     React.createElement("input", { type: "submit", value: "Submit", disabled: (state.name.length == 0 || state.surname.length == 0) })
+            // ]);
+        }
+        ReactDOM.render(React.createElement(FeedbackForm, null, null), document.getElementById("root"));
+    </script>
+</body>
+
+</html>

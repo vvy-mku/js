@@ -1,0 +1,112 @@
+body,
+p,
+div,
+button,
+input {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Inter;
+    font-size: 12px;
+    line-height: 18px;
+    color: #475467;
+}
+
+form {
+    width: 300px;
+    margin: 100px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+input,
+input[type="radio"]+label {
+    border: 1px solid #EAECF0;
+    border-radius: 4px;
+    color: #101828;
+}
+
+input[type="text"] {
+    padding: 8px 16px;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+input[type="text"]::placeholder {
+    color: #667085;
+}
+
+input[type="button"],
+input[type="radio"]+label {
+    align-self: flex-start;
+    padding: 4px 16px;
+    background-color: #fff;
+    color: #475467;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 19px;
+    font-weight: 600;
+}
+
+input[type="button"]:hover,
+input[type="radio"]+label:hover {
+    background-color: #F8FAFC;
+    color: #344054;
+    border-color: #344054;
+}
+
+input[type="button"]:active,
+input[type="radio"]+label:active {
+    background-color: #F8FAFC;
+    color: #667085;
+    border-color: #667085;
+}
+
+input[type="radio"]:checked+label {
+    background-color: #F8FAFC;
+    color: #667085;
+    border-color: #667085;
+}
+
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="submit"] {
+    align-self: center;
+    padding: 4px 16px;
+    background-color: #154FEF;
+    color: #fff;
+    border-color: #154FEF;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 19px;
+    font-weight: 600;
+}
+
+input[type="submit"]:disabled {
+    background-color: #D0D5DD;
+    border-color: #D0D5DD;
+    color: #98A2B3;
+}
+
+p {
+    font-size: 14px;
+}
