@@ -34,14 +34,27 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <div id="root"></div>
     <script type="text/babel">
-        function FeedbackForm() {
+
+        function FeedbackForm(props) {
             const [state, setState] = React.useState({
                 name: "",
                 surname: "",
                 score: null,
+                dataLoaded: false
             });
 
+            if (!state.dataLoaded) {
+                setTimeout(
+                    () => {
+                        setState({ name: "Alex", surname: "Br", score: null, dataLoaded: true, done: true });
+                    },
+                    2000
+                );
+                return (<form>Loading...</form>)
+            }
+
             return (<form>
+                <h1>{props.title}</h1>
                 <div className="vertical">
                     <input type="text" name="userName" placeholder="Name" value={state.name} onChange={(event) => setState({ ...state, name: event.target.value })} />
                     <input type="text" name="userSurname" placeholder="Surname" value={state.surname} onChange={(event) => setState({ ...state, surname: event.target.value })} />
@@ -60,7 +73,16 @@
             //     React.createElement("input", { type: "submit", value: "Submit", disabled: (state.name.length == 0 || state.surname.length == 0) })
             // ]);
         }
-        ReactDOM.render(React.createElement(FeedbackForm, null, null), document.getElementById("root"));
+
+        function App() {
+            return (<div>
+                <FeedbackForm title="First form" />
+                <FeedbackForm title="Second form" />
+                <FeedbackForm title="Third form" />
+            </div>)
+        }
+
+        ReactDOM.render(React.createElement(App, null, null), document.getElementById("root"));
     </script>
 </body>
 
