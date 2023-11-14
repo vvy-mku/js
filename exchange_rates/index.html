@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <title>Currencies exchange rates</title>
+    <style>
+        .hor {
+            display: flex;
+            flex-direction: row;
+            gap: 50px
+        }
+
+        .ver {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const currencies = {
+            "AED": "United Arab Emirates Dirham",
+            "AFN": "Afghan Afghani",
+            "ALL": "Albanian Lek",
+            "AMD": "Armenian Dram",
+            "ANG": "Netherlands Antillean Guilder",
+            "AOA": "Angolan Kwanza",
+            "ARS": "Argentine Peso",
+        }
+        const rates = {
+            "AED": 3.67297,
+            "AFN": 73.488977,
+            "ALL": 98.007143,
+            "AMD": 402.403489,
+            "ANG": 1.800804,
+            "AOA": 828.546667,
+            "ARS": 349.894525
+        }
+
+        function CurrucyItem(props) {
+            return (<div>
+                <input type="checkbox" value={props.code} id={"check_" + props.code} onChange={() => {
+                    props.onChange(props.code);
+                }} />
+                <label htmlFor={"check_" + props.code}>{props.code} – {props.title}</label>
+            </div>)
+        }
+
+        function CurrucyRate(props) {
+            return (<div><p>Code</p><p>Rate</p></div>)
+        }
+
+        function Header() {
+            return (<div><h4>Exchange rate explorer</h4></div>)
+        }
+
+        function App() {
+            const [state, setState] = React.useState({ currencies: currencies, rates: rates, checked: [] });
+
+            console.log(state);
+
+            let currencyItems = [];
+
+            const currenciesArray = Object.entries(currencies);
+
+            const currencyChange = function (code) {
+                let checked = state.checked;
+                if (checked.indexOf(code) < 0) {
+                    checked.push(code);
+                } else {
+                    // Як видалити елемент?
+                }
+                setState({ ...state, checked: checked });
+            };
+
+            currenciesArray.forEach((element) =>
+                currencyItems.push(<CurrucyItem code={element[0]} title={element[1]} onChange={currencyChange} />));
+
+            let currencyRates = [];
+
+
+            return (<div>
+                <Header />
+                <div className="hor">
+                    <div className="ver"><h5>Currencies:</h5>
+                        {currencyItems}
+                    </div>
+                    <div className="ver"><h5>Rates:</h5>
+                        {currencyRates}
+                    </div>
+                </div>
+            </div >)
+        }
+
+        ReactDOM.render(React.createElement(App, null, null), document.getElementById("root"));
+    </script>
+</body>
+
+</html>
