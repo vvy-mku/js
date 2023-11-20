@@ -43,17 +43,22 @@
             "ARS": 349.894525
         }
 
-        function CurrucyItem(props) {
+        function CurrencyItem({ code, title, onChange }) {
+            // const code = props.code;
+            // const title = props.title;
+
+            // const {code, title, onChange} = props;
+
             return (<div>
-                <input type="checkbox" value={props.code} id={"check_" + props.code} onChange={() => {
-                    props.onChange(props.code);
+                <input type="checkbox" value={code} id={"check_" + code} onChange={() => {
+                    onChange(code);
                 }} />
-                <label htmlFor={"check_" + props.code}>{props.code} – {props.title}</label>
+                <label htmlFor={"check_" + code}>{code} – {title}</label>
             </div>)
         }
 
-        function CurrucyRate(props) {
-            return (<div><p>Code</p><p>Rate</p></div>)
+        function CurrencyRate({ currency, rate }) {
+            return <div>{currency} – {rate}</div>
         }
 
         function Header() {
@@ -61,28 +66,60 @@
         }
 
         function App() {
-            const [state, setState] = React.useState({ currencies: currencies, rates: rates, checked: [] });
+            const [state, setState] = React.useState({ currencies, rates, checked: [], loaded: false });
 
             console.log(state);
 
-            let currencyItems = [];
+            if (!state.loaded) {
+                const xhr = new XMLHttpRequest();
 
-            const currenciesArray = Object.entries(currencies);
+                xhr.addEventListener('readystatechange', function () {
+                    if (this.readyState === this.DONE) {
+                        console.log(this.responseText);
+                    }
+                });
+
+                xhr.open('GET', 'https://openexchangerates.org/api/currencies.json?prettyprint=false&show_alternative=false&show_inactive=false&app_id=ae501b33e02343989440aa622a830a28');
+                xhr.setRequestHeader('accept', 'application/json');
+
+                xhr.send();
+                //setTimeout(() => setState({ ...state, loaded: true }), 2000);
+                return <h4>Loading</h4>;
+            }
+
+            const currenciesArray = Object.entries(state.currencies);
 
             const currencyChange = function (code) {
                 let checked = state.checked;
-                if (checked.indexOf(code) < 0) {
+                const pos = checked.indexOf(code)
+                if (pos < 0) {
                     checked.push(code);
                 } else {
-                    // Як видалити елемент?
+                    checked.splice(pos, 1);
                 }
-                setState({ ...state, checked: checked });
+                //setState({ ...state, checked: checked });
+                setState({ ...state, checked });
             };
 
-            currenciesArray.forEach((element) =>
-                currencyItems.push(<CurrucyItem code={element[0]} title={element[1]} onChange={currencyChange} />));
 
-            let currencyRates = [];
+            // currenciesArray.forEach((element) =>
+            //     currencyItems.push(<CurrencyItem code={element[0]} title={element[1]} onChange={currencyChange} />));
+            //   ||
+            //   \/
+            //
+            const currencyItems = currenciesArray.map((element) => <CurrencyItem code={element[0]} title={element[1]} onChange={currencyChange} />)
+
+
+            // let currencyRates = [];
+
+            // const ratesArray = Object.entries(state.rates);
+
+            // ratesArray.forEach((element) => {
+            //     if (state.checked.indexOf(element[0]) >= 0) {
+            //         const reactElement = <CurrencyRate currency={element[0]} rate={element[1]} />;
+            //         currencyRates.push(reactElement);
+            //     }
+            // });
 
 
             return (<div>
@@ -92,7 +129,7 @@
                         {currencyItems}
                     </div>
                     <div className="ver"><h5>Rates:</h5>
-                        {currencyRates}
+                        {state.checked.map((code) => <CurrencyRate currency={code} rate={state.rates[code]} />)}
                     </div>
                 </div>
             </div >)
