@@ -53,12 +53,12 @@
                 <input type="checkbox" value={code} id={"check_" + code} onChange={() => {
                     onChange(code);
                 }} />
-                <label htmlFor={"check_" + code}>{code} – {title}</label>
+                <label htmlFor={"check_" + code}>{code} - {title}</label>
             </div>)
         }
 
         function CurrencyRate({ currency, rate }) {
-            return <div>{currency} – {rate}</div>
+            return <div>{currency} - {rate}</div>
         }
 
         function Header() {
@@ -75,7 +75,17 @@
 
                 xhr.addEventListener('readystatechange', function () {
                     if (this.readyState === this.DONE) {
-                        console.log(this.responseText);
+                        const currencies = JSON.parse(this.responseText);
+
+                        const xhrRates = new XMLHttpRequest();
+                        xhrRates.addEventListener('readystatechange', function () {
+                            if (this.readyState === this.DONE) {
+                                setState({ ...state, currencies: currencies, rates: JSON.parse(this.responseText).rates, loaded: true });
+                            }
+                        });
+                        xhrRates.open('GET', 'https://openexchangerates.org/api/latest.json?app_id=ae501b33e02343989440aa622a830a28');
+                        xhrRates.setRequestHeader('accept', 'application/json');
+                        xhrRates.send();
                     }
                 });
 
@@ -84,7 +94,7 @@
 
                 xhr.send();
                 //setTimeout(() => setState({ ...state, loaded: true }), 2000);
-                return <h4>Loading</h4>;
+                return <h4>Loading...</h4>;
             }
 
             const currenciesArray = Object.entries(state.currencies);
@@ -98,6 +108,7 @@
                     checked.splice(pos, 1);
                 }
                 //setState({ ...state, checked: checked });
+                history.pushState({}, '', '/' + checked.join('/'));
                 setState({ ...state, checked });
             };
 
