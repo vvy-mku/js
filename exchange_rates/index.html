@@ -66,9 +66,12 @@
         }
 
         function App() {
+
             const [state, setState] = React.useState({ currencies, rates, checked: [], loaded: false });
 
-            console.log(state);
+            React.useEffect(function () {
+                setState({ ...state, checked: location.pathname.split('/').splice(1) });
+            }, []);
 
             if (!state.loaded) {
                 const xhr = new XMLHttpRequest();
@@ -107,6 +110,7 @@
                 } else {
                     checked.splice(pos, 1);
                 }
+
                 //setState({ ...state, checked: checked });
                 history.pushState({}, '', '/' + checked.join('/'));
                 setState({ ...state, checked });
